@@ -7,12 +7,12 @@
     <form class="form-inline">
       <div class="form-row">
         <div class="col-md-5">
-          <input type="text" class="form-control" placeholder="Todo title" autocomplete="off">
+          <input type="text" name="title" [(ngModel)]="newTodo.title" class="form-control" placeholder="Todo title" autocomplete="off">
         </div>
         <div class="col-md-5">
           <div class="form-group">
             <div class="input-group">
-              <input class="form-control" placeholder="Completion Date"
+              <input class="form-control" [(ngModel)]="newTodo.date" placeholder="Completion Date"
                      name="dp" ngbDatepicker #d="ngbDatepicker" autocomplete="off">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
@@ -29,7 +29,7 @@
     </form>
   </div>
 
-  <table class="table">
+  <table class="table" *ngIf="todos.length > 0">
     <thead>
       <tr>
         <th></th>
@@ -40,19 +40,23 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td></td>
-        <td>Wash Dishes</td>
-        <td>25-09-2018</td>
-        <td>Not Complete</td>
+      <tr *ngFor="let todo of todos">
+        <td>
+          <i class="fa fa-check-circle" *ngIf="todo.complete"></i>
+          <i class="fa fa-circle-o" *ngIf="!todo.complete"></i>
+        </td>
+        <td>{{ todo.title }}</td>
+        <td>{{ todo.date.year }}-{{ todo.date.month }}-{{ todo.date.day }}</td>
+        <td *ngIf="!todo.complete">Not Complete</td>
+        <td *ngIf="todo.complete">Complete</td>
         <td class="icons">
-          <button class="btn btn-success">
+          <button class="btn btn-success" (click)="completeTodo(todo)" [disabled]="todo.complete">
             <i class="fa fa-check"></i>
           </button>
           <button class="btn btn-primary">
             <i class="fa fa-pencil"></i>
           </button>
-          <button class="btn btn-danger">
+          <button class="btn btn-danger" (click)="deleteTodo(todo)">
             <i class="fa fa-trash"></i>
           </button>
         </td>

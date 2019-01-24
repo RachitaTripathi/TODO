@@ -5,6 +5,6 @@ export class Todo{
     complete = false;
 
     constructor(value: Object = {}){
-        Object.assign(this,value);
+        Object.assign(this, value);
     }
 }
