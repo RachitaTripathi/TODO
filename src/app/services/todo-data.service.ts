@@ -43,7 +43,7 @@ export class TodoDataService {
     return todos.filter(todo => todo.id === id).pop();
   }
 
-  updateTodo(id: number, values: Object = {}){
+  updateTodo(id: number, values: Object = {}): Todo {
     const todo = this.getTodoById(id);
     if(!todo){
       return null;
